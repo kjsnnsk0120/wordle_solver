@@ -126,7 +126,7 @@ def wordle_solver_cliant(available_int, first_flag, previous_suggested_word):
     available_int = int(result["available_int"])
     suggested_word = result["suggested_word"]
 
-    data_init = pd.read_table("wordles.txt",header = None)[0]
+    data_init = pd.read_table("https://slc.is/data/wordles.txt",header = None)[0]
     d = []
     for i in range(len(data_init)-1,-1,-1):
         if available_int & 1<<i:

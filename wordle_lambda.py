@@ -9,7 +9,7 @@ if __name__ == "lambda_function":
 elif __name__ == "__main__":
     import requests
     import json
-    word_list_filename = "wordles.txt"
+    word_list_filename = "https://slc.is/data/wordles.txt"
     api_endpoint = "https://thtok2ua96.execute-api.ap-northeast-1.amazonaws.com/wordle_solver"
 
 data_init = pd.read_table(word_list_filename,header = None)[0]

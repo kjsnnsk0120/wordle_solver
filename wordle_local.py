@@ -2,7 +2,7 @@ import collections
 import numpy as np
 import pandas as pd
 
-word_list_filename = "wordles.txt"
+word_list_filename = "https://slc.is/data/wordles.txt"
 word_relation_table_filename1 = "word_relation_table_int8_1.pk"
 word_relation_table_filename2 = "word_relation_table_int8_2.pk"
 

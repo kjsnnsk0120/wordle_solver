@@ -10,7 +10,7 @@ from pyodide.http import open_url
 import json
 api_endpoint = "https://cz3cdlwyw1.execute-api.ap-northeast-1.amazonaws.com/default/wordle_2"
 pyscript.write("suggestedword","suggested word is soare")
-        
+
 tmp_int = [-1]
 def client():
     input_word = input_word_a.value
@@ -43,9 +43,9 @@ def call_lambda(word_list_int,input_word,input_response):
     
     url_with_params = ('{}?{}'.format(api_endpoint, gen_params(params)))
     url_with_params = "https://cz3cdlwyw1.execute-api.ap-northeast-1.amazonaws.com/default/wordle_2?word_list_int=-1&input_word=soare&input_response=xx-ox"
-    #pyscript.write("leftwords",url_with_params)
+    pyscript.write("leftwords",url_with_params)
     try:
-        body = open_url(url_with_params).read()
+        body = open_url(url_with_params).getvalue()
     except Exception as e:
         pyscript.write("leftwords",e)
     input_response_a.clear()
@@ -56,9 +56,9 @@ def call_lambda(word_list_int,input_word,input_response):
     </head>
     <body>
         <py-box widths="2/5;2/5;1/5">
-            <py-inputbox id="input-word_a">
+            <py-inputbox id="input_word_a">
             </py-inputbox>
-            <py-inputbox id="input-response_a">
+            <py-inputbox id="input_response_a">
 def on_keypress(e):
     if (e.code == "Enter"):
         client()

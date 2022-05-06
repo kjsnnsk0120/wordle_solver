@@ -1,0 +1,76 @@
+<html>
+
+    <head>
+        <title>PyScript Hello World</title>
+        <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+        <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+
+    <py-script>
+from pyodide.http import open_url
+import json
+api_endpoint = "https://cz3cdlwyw1.execute-api.ap-northeast-1.amazonaws.com/default/wordle_2"
+pyscript.write("suggestedword","suggested word is soare")
+        
+tmp_int = [-1]
+def client():
+    input_word = input_word_a.value
+    input_response = input_response_a.value
+    input_word_a.clear()
+    res = call_lambda(tmp_int[0],input_word,input_response)
+    if int(res["number_of_candidates"]) == 0:
+        pyscript.write("suggestedword","something wrong")
+    elif int(res["number_of_candidates"]) == 1:
+        pyscript.write("suggestedword","the answer is " + str(res["candidates"]))
+    else:
+        pyscript.write("suggestedword","suggested word is " + str(res["suggested_word"]))
+    pyscript.write("leftwords","number_of_candidates: "+str(res["number_of_candidates"]))
+
+    tmp_int[0] = res["available_int"]
+
+def gen_params(params):
+    ans = ""
+    for key in params:
+        ans += str(key)
+        ans += "="
+        ans += str(params[key])
+        ans += "&"
+    return ans[:-1]
+
+def call_lambda(word_list_int,input_word,input_response):
+    params = {"word_list_int":str(word_list_int),
+            "input_word": input_word,
+            "input_response": input_response}
+    
+    url_with_params = ('{}?{}'.format(api_endpoint, gen_params(params)))
+    url_with_params = "https://cz3cdlwyw1.execute-api.ap-northeast-1.amazonaws.com/default/wordle_2?word_list_int=-1&input_word=soare&input_response=xx-ox"
+    #pyscript.write("leftwords",url_with_params)
+    try:
+        body = open_url(url_with_params).read()
+    except Exception as e:
+        pyscript.write("leftwords",e)
+    input_response_a.clear()
+    
+    result = json.loads(body)
+    return result
+    </py-script>
+    </head>
+    <body>
+        <py-box widths="2/5;2/5;1/5">
+            <py-inputbox id="input-word_a">
+            </py-inputbox>
+            <py-inputbox id="input-response_a">
+def on_keypress(e):
+    if (e.code == "Enter"):
+        client()
+            </py-inputbox>
+            <py-button id="new-task-btn" label="Add Task!">
+def on_click(evt):
+    client()
+            </button>
+        </py-box>
+      
+        <p><label id='suggestedword'></label></p>
+        <p><label id='leftwords'></label></p>
+
+    </body>
+</html>
